@@ -492,15 +492,11 @@ import microbit
 microbit.display.scroll("Hello World!")
 ```
 
+![2](https://user-images.githubusercontent.com/44191076/107321984-89ac8180-6ade-11eb-9981-e40dcf2937bb.png)
+
 確定編輯器已與 micro:bit 連線，然後按 **Flash** 上傳程式。
 
-跑馬燈跑完後，你可以按 micro:bit 背面的 reset（重置）鈕來重新啟動板子。你會發現 micro:bit 再次執行了同一支程式，不再需要我們手動輸入。
-
-> 但 micro:bit 是怎麼執行程式的呢？事實上，你的程式會轉成一個文字檔 main.py 並儲存在 micro:bit 上。當 micro:bit 啟動時，它就會尋找並執行這個檔案的內容。若你按編輯器的 **Load/Save**，就可以瀏覽板子的檔案系統：
-
-![1](https://user-images.githubusercontent.com/44191076/107311147-c1103380-6ac8-11eb-9a09-df0bff8bd5f8.png)
-
-> 可以看到板子上確實有一個 main.py，而這個介面也允許你上傳 .hex 或 .py 檔。.py 是標準的 Python 草稿碼副檔名；這表示你也可以用一般的 Python 編輯器寫程式，儲存成 main.py，然後手動上載到 micro:bit 上。你甚至能藉此上傳額外的模組檔案，但這就是比較進階的主題了。
+跑馬燈跑完後，你可以按 micro:bit 背面的 reset（重置）鈕來重新啟動板子。你會發現同一支程式又跑了一次，不再需要我們手動輸入。這是因為現在這幾行程式已經以檔案形式存在 micro:bit 上，它每次開機時 MicroPython 直譯器就會自動執行之。
 
 ### 匯入模組的其他方式
 
