@@ -8,7 +8,7 @@
 
 ## 關於本指南
 
-這份指南不是替兒童而寫，而是有興趣使用 BBC micro:bit 開發板為媒介來學習 Python 語言的成人或青少年。
+這份指南不是替兒童而寫，而是有興趣使用 BBC micro:bit 開發板為媒介來學習 Python 語言的成人或青少年。這同時也是一個嘗試，試著突破傳統 Python 教學的途徑。
 
 現有的書籍或網路教材，在談及 micro:bit 的 Python 教學時，多半著重在 micro:bit 的功能和相關的範例，卻鮮少深入 Python 的語言特色。這份指南的目的是借用 micro:bit 的硬體特色來介紹 Python 的重要概念，好讓學習者將來能將之應用在正式的 Python 程式開發。
 
@@ -444,7 +444,9 @@ object <module 'microbit'> is of type module
 ['__class__', '__name__', 'Image', 'Sound', 'SoundEvent', 'accelerometer', 'audio', 'button_a', 'button_b', 'compass', 'display', 'i2c', 'microphone', 'panic', 'pin0', 'pin1', 'pin10', 'pin11', 'pin12', 'pin13', 'pin14', 'pin15', 'pin16', 'pin19', 'pin2', 'pin20', 'pin3', 'pin4', 'pin5', 'pin6', 'pin7', 'pin8', 'pin9', 'pin_logo', 'pin_speaker', 'reset', 'running_time', 'set_volume', 'sleep', 'speaker', 'spi', 'temperature', 'uart', 'ws2812_write']
 ```
 
-如果你想知道一個模組（或者模組內的功能）底下有什麼東西，又覺得花時間開文件麻煩的話，可以很快用 help() 或 dir() 查一下。
+如果你想知道一個模組（或者模組內的功能）底下有什麼東西，又覺得花時間查閱線上文件麻煩的話，可以很快用 help() 或 dir() 查一下。
+
+> micro:bit 的[MicroPython 線上文件](https://microbit-micropython.readthedocs.io/en/latest/index.html)是另一個好用的工具，雖然它對程式入門者來說會比較難讀。
 
 現在，micro:bit LED 顯示幕的相關功能都放在 microbit 模組的 display 項目下。我們可以查查看它是什麼：
 
@@ -510,16 +512,96 @@ from microbit import display
 display.scroll("Hello World!")
 ```
 
-上面的程式從 microbit 模組單獨匯入 display 物件，於是我們就能直接使用 display 名稱了。（但是你不能寫 ```from microbit.display import scroll```，因為 display 本身不是模組，不適用於這種語法。）要注意的是，現在 microbit 這名稱並沒有被匯入，所以沒辦法使用。
+從字面上，就是「從 microbit 模組匯入 display」的意思。這麼一來，你就能在程式中直接使用 display 的功能，而不需要再在前面加上 microbit 了。只是要注意，現在程式中就不會匯入 microbit 這個名稱了。
 
-除此以外，microbit 模組內還有很多其他東西。在網路上的教材中，很常看到會用以下的方式載入 microbit 模組下的所有功能：
+那麼，是不是可以進一步寫成  ```from microbit.display import scroll``` 或其他寫法呢？可惜沒辦法，因為 display 是個物件而不是模組，它不支援這種匯入語法。但在正規 Python 的許多第三方套件中，常會有分割成很多子套件，就可以這樣使用。
+
+還有一種方式，是把 microbit 模組底下的所有東西都一概匯入，這也是網路上 micro:bit 教材常見的寫法：模組下的所有功能：
 
 ```python
 from microbit import *
 ```
 
-這麼一來，你就能跳過 microbit 名稱和使用它底下的任何東西了。但在一般的 Python 程式設計中，這樣反而不見得是好主意，因為你有可能無意間載入了太多功能，或者有兩個模組的子功能具有同樣的名稱（因此有一邊會蓋掉另一邊）。所以在本教材中，我們還是會很明確的寫出我們要匯入什麼。
+這樣在 micro:bit 上幾乎不太可能遇到問題，但在正規的 Python 程式設計中，反而不見得是好主意，因為你有可能無意間載入了太多功能，或者有兩個模組的子功能具有同樣的名稱（因此有一邊會蓋掉另一邊）。所以在本教材中，我們還是會很明確的寫出我們要匯入什麼。
 
+### 結合模組的不同功能：顯示圖案
+
+現在我們來結合 microbit 模組下的多個功能，好在 LED 顯示幕上秀一些事先定義好的圖案。
+
+回到 REPL 模式，來調查 microbit.Image 下的內容：
+
+```
+>>> import microbit
+>>> dir(microbit.Image)
+['__class__', '__name__', 'copy', '__bases__', '__dict__', 'ALL_ARROWS', 'ALL_CLOCKS', 'ANGRY', 'ARROW_E', 'ARROW_N', 'ARROW_NE', 'ARROW_NW', 'ARROW_S', 'ARROW_SE', 'ARROW_SW', 'ARROW_W', 'ASLEEP', 'BUTTERFLY', 'CHESSBOARD', 'CLOCK1', 'CLOCK10', 'CLOCK11', 'CLOCK12', 'CLOCK2', 'CLOCK3', 'CLOCK4', 'CLOCK5', 'CLOCK6', 'CLOCK7', 'CLOCK8', 'CLOCK9', 'CONFUSED', 'COW', 'DIAMOND', 'DIAMOND_SMALL', 'DUCK', 'FABULOUS', 'GHOST', 'GIRAFFE', 'HAPPY', 'HEART', 'HEART_SMALL', 'HOUSE', 'MEH', 'MUSIC_CROTCHET', 'MUSIC_QUAVER', 'MUSIC_QUAVERS', 'NO', 'PACMAN', 'PITCHFORK', 'RABBIT', 'ROLLERSKATE', 'SAD', 'SILLY', 'SKULL', 'SMILE', 'SNAKE', 'SQUARE', 'SQUARE_SMALL', 'STICKFIGURE', 'SURPRISED', 'SWORD', 'TARGET', 'TORTOISE', 'TRIANGLE', 'TRIANGLE_LEFT', 'TSHIRT', 'UMBRELLA', 'XMAS', 'YES', 'blit', 'crop', 'fill', 'get_pixel', 'height', 'invert', 'set_pixel', 'shift_down', 'shift_left', 'shift_right', 'shift_up', 'width']
+>>> 
+```
+
+Image 包含一系列圖形，你可以把這些東西傳給 display.show()。
+
+現在回到程式撰寫畫面：
+
+```python
+from microbit import display, Image
+
+display.show(Image.HAPPY)
+```
+
+這裡從 microbit 模組匯入了 display 和 Image 名稱（兩者用逗號分隔），然後在 LED 顯示幕顯示笑臉。我們之後會再講怎麼「畫出」你自己的圖案。
+
+
+## 迴圈與延遲
+
+### while 迴圈
+
+現在我們讓 micro:bit 在 LED 顯示幕上顯示了文字，但就只會執行這麼一次而已。但是，你自然會希望程式能在開發板上重複執行程式吧，就像編輯器剛打開時出現的範例程式那樣。這時我們需要兩個東西：**迴圈（loop）**和**延遲（delay）**。
+
+迴圈顧名思義，能重複執行程式碼。最簡單的迴圈形式是無窮迴圈，也就是會不停重複的迴圈：
+
+```python
+while True:
+    # 程式碼
+```
+
+這裡定義了一個 **while** 迴圈，稍後我們會講到後面的布林值 True 的用途。
+
+在 Python 語言中，有些程式碼會隸屬於某個功能，稱為一個程式區塊。其他程式語言多半會用大括號 {} 將程式區塊包起來，但 Python 是用**縮排**來識別之，而該功能的結尾會寫冒號（:），代表下面的程式是它的區塊。
+
+> 井字號 # 用來寫程式註解──在 # 後面的任何文字都不會被 Python 直譯器執行。如果你的程式比較複雜，或是要分享給別人看，適當且清楚的註解能讓人更快看懂程式。
+
+現在，我們在 while 迴圈中放兩行程式碼，好讓 micro:bit 上的圖案會閃動：
+
+```python
+from microbit import display, Image
+
+while True:
+    display.show(Image.HAPPY)  # 顯示圖案
+    display.clear()            # 清除畫面
+```
+
+> 註解也不一定要對齊，但有時對齊比較好看。
+
+### sleep 延遲
+
+不過，燒錄了上面的程式後，你會發現圖案以非常快的速度閃動，效果反而看不清楚。
+
+有時候，我們並不需要程式用最快的速度執行，而是得配合人類的操作速度。換言之，我們得在顯示和清除圖案之間加入一些時間延遲才行。
+
+microbit 模組的 sleep() 函式可以用來製造延遲：
+
+```python
+from microbit import display, Image, sleep
+
+while True:
+    display.show(Image.HAPPY)
+    sleep(500)
+    display.clear()
+    sleep(500)
+```
+
+sleep() 接收一個數字，代表要等待的毫秒（millisecond，千分之一秒），所以 500 代表 0.5 秒。執行 sleep() 時，程式不會做其他事情，直到指定的時間結束為止。
+
+這麼一來，顯示跟清除圖案的動作都有半秒的延遲，圖案閃動的效果就更明顯了。
 
 
 
