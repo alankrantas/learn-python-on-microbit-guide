@@ -8,7 +8,7 @@
 
 ## 關於本指南
 
-這份指南不是替兒童而寫，而是有興趣使用 BBC micro:bit 開發板為媒介來學習 Python 語言的成人或青少年。這同時也是一個嘗試，試著突破傳統 Python 教學的途徑。
+這份指南不是替兒童而寫，而是有興趣使用 BBC micro:bit 開發板為媒介來學習 Python 語言的成人或青少年。
 
 現有的書籍或網路教材，在談及 micro:bit 的 Python 教學時，多半著重在 micro:bit 的功能和相關的範例，卻鮮少深入 Python 的語言特色。這份指南的目的是借用 micro:bit 的硬體特色來介紹 Python 的重要概念，好讓學習者將來能將之應用在正式的 Python 程式開發。
 
@@ -335,7 +335,7 @@ Python 變數名稱也支援 Unicode，因此用中文、日文或各國語言�
 <function>
 ```
 
-若要「呼叫」函式，得在這個名稱後面加上小括號。
+REPL 告訴我們 print 是個函式。若要使用（也就是呼叫）函式，得在這個名稱後面加上小括號，和寫數學函數很像。
 
 如前面所提，如果你用 = 指派一個新的值給 print 這個名稱，原本的函式就找不到了（直到下次重新執行程式、或重開直譯器為止），所以這種行為是能免則免。
 
@@ -469,7 +469,7 @@ microbit.display（用句號連接）是個物件，它本身也有一些功能�
 因此，若你想使用上面的 show() 函式來顯示資料，你得連同模組跟物件的名稱來呼叫它：
 
 ```
->>> microbit.display.show("Show something")
+>>> microbit.display.show("Hello World!")
 ```
 
 > micro:bit 的 LED 顯示幕只能顯示英文、數字和一些標點符號，不支援中文或全形符號等等。
@@ -477,7 +477,7 @@ microbit.display（用句號連接）是個物件，它本身也有一些功能�
 你甚至可試著呼叫其他函式：
 
 ```
->>> microbit.display.scroll("Show something")
+>>> microbit.display.scroll("Hello World!")
 ```
 
 你應該會發現，scroll() 正如其名，能在 LED 幕捲動顯示文字，使之變成跑馬燈。
@@ -549,6 +549,7 @@ display.show(Image.HAPPY)
 
 這裡從 microbit 模組匯入了 display 和 Image 名稱（兩者用逗號分隔），然後在 LED 顯示幕顯示笑臉。我們之後會再講怎麼「畫出」你自己的圖案。
 
+![04](https://user-images.githubusercontent.com/44191076/107517822-3541f880-6be9-11eb-9022-b64821444012.png)
 
 ## 迴圈與延遲
 
