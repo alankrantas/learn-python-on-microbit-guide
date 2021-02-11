@@ -2,7 +2,7 @@
 
 作：Alan Wang, Feb 2021
 
-本指南採用 [GNU 3.0 通用公共授權](https://www.chinasona.org/gnu/gnulgpl-v3-tc.html)
+本指南採用 [GNU 3.0 通用公共授權](https://www.chinasona.org/gnu/gnulgpl-v3-tc.html)，注意這意味著衍生作品必須同樣採用 GNU 授權。
 
 ![01](https://user-images.githubusercontent.com/44191076/107118869-ab2f2280-68be-11eb-9a6d-87b02939a7e2.png)
 
@@ -604,6 +604,15 @@ sleep() 接收一個數字，代表要等待的毫秒（millisecond，千分之�
 
 這麼一來，顯示跟清除圖案的動作都有半秒的延遲，圖案閃動的效果就更明顯了。
 
+> 如果你用過 MakeCode 的積木程式介面，它的圖形顯示積木本身其實包含有 0.4 秒的延遲，但 MicroPython 的 show() 就沒有。
+
+## 邏輯判斷與流程控制
+
+在前面的 while 迴圈，後面的 True 其實是用來控制「要不要執行迴圈」。如果你把後面的 True 改成 False 然後重新上傳程式，你會發現程式完全不會執行。
+
+### 比較運算子
+
+### 邏輯運算子
 
 
 (持續寫作中...)
