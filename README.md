@@ -769,7 +769,7 @@ while True:
         display.clear()
 ```
 
-這支程式會用無窮迴圈來檢查使用者有沒有按下 A 鈕，如果有就顯示一個圖案、等待 500 毫秒，然後清空螢幕。
+這支程式會用無窮迴圈來檢查使用者有沒有按下 A 鈕，如果有就顯示一個圖案、等待 500 毫秒（好讓圖案能被看見），然後清空螢幕。
 
 下面是另一種寫法，直接用使用者按鈕與否兩種狀態來決定要顯示還是清空圖案：
 
@@ -790,11 +790,11 @@ while True:
 from microbit import display, Image, button_a, button_b, sleep
 
 while True:
-    if button_a.is_pressed() and button_b.is_pressed():
+    if button_a.is_pressed() and button_b.is_pressed():  # 如果按下 A+B
         display.show(Image.HEART)
-    elif button_a.is_pressed():
+    elif button_a.is_pressed():  # 如果按下 A
         display.show(Image.YES)
-    elif button_b.is_pressed():
+    elif button_b.is_pressed():  # 如果按下 B
         display.show(Image.NO)
     else:
         display.clear()
