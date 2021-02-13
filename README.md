@@ -726,7 +726,7 @@ else:
 
 如果你想判斷的條件有不只一種，那麼可以在 if 和 else 之間加入 elif（即 else if 的簡寫）：
 
-```
+```python
 a = 3
 
 if a > 4:
@@ -740,5 +740,69 @@ else:
 如果 if 的條件判斷式不成立，那麼就會看下一個 elif 的條件判斷式是否成立。elif 可以寫無限多個，只要它放在 if 後面就好。至於 else 則可寫可不寫，但一定會位於整個邏輯判斷的尾端，代表 if 與所有 elif 之條件全都不成立時的狀況。
 
 if...elif...else 是由上往下依序判斷，所以務必注意前面的判斷對後面的影響。以上面的 ```elif a > 2:``` 為例，既然前面已經判斷過 a 是否大於 4 ，不成立就表示 a 一定小於或等於 4。也就是說，第二個判斷式其實就等於 ```elif 2 < a <= 4:```。
+
+## 第一個能對使用者操作做出回應的程式
+
+前面講了這麼多，現在終於可以來看 if 要如何應用在 micro:bit 上了。
+
+microbit 模組下的 button_a 和 button_b 分別代表板子上的 A 與 B 鈕。這兩個物件都擁有函式 is_pressed()，當你按住按鈕時就會傳回 True，反之傳回 False：
+
+```python
+from microbit import button_a, sleep
+
+while True:
+    print(button_a.is_pressed())
+    sleep(100)
+```
+
+上面的程式會在 REPL 介面輸出 A 鈕 is_pressed() 的傳回值，有按下時就變成 True。留意這裡也加了 100 毫秒的延遲時間，否則輸出的訊息太過密集，REPL 介面會難以應付。
+
+接著，我們希望 micro:bit 在使用者按住 A 時短暫顯示一個圖案：
+
+```python
+from microbit import display, Image, button_a, sleep
+
+while True:
+    if button_a.is_pressed():
+        display.show(Image.YES)
+        sleep(500)
+        display.clear()
+```
+
+這支程式會用無窮迴圈來檢查使用者有沒有按下 A 鈕，如果有就顯示一個圖案、等待 500 毫秒，然後清空螢幕。
+
+下面是另一種寫法，直接用使用者按鈕與否兩種狀態來決定要顯示還是清空圖案：
+
+```python
+from microbit import display, Image, button_a, sleep
+
+while True:
+    if button_a.is_pressed():
+        display.show(Image.YES)
+    else:
+        display.clear()
+    sleep(100)
+```
+
+如果你想判斷更多種操作，例如按 A+B、以及單獨按 A 或 B，可以用 elif 敘述來組合：
+
+```python
+from microbit import display, Image, button_a, button_b, sleep
+
+while True:
+    if button_a.is_pressed() and button_b.is_pressed():
+        display.show(Image.HEART)
+    elif button_a.is_pressed():
+        display.show(Image.YES)
+    elif button_b.is_pressed():
+        display.show(Image.NO)
+    else:
+        display.clear()
+    sleep(100)
+```
+
+注意 A+B 的按下放在最前面判斷，因為就算沒有按 A+B，你也有可能單獨按了其中一種。要是先判斷按下 A 或 B，誤判的機會就很大了，畢竟你不可能那麼剛好在同一時間按下 A+B。
+
+## 再探 while：有條件停止迴圈
 
 (持續寫作中...)
