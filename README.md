@@ -701,7 +701,7 @@ if a > 4:
 
 和 while 迴圈一樣，if 敘述有它自己的程式區塊，所以 if 這行的結尾得加上冒號（這是初學 Python 時非常容易犯的錯之一）。程式區塊必須往內縮排，每一行的縮排得一致。
 
-前面只有在條件判斷式成立時才會印出訊息。如果我們也想在 a 不大於 4 時印出另一個訊息呢？
+前面只有在條件運算式成立時才會印出訊息。如果我們也想在 a 不大於 4 時印出另一個訊息呢？
 
 ```python
 a = 5
@@ -737,7 +737,7 @@ else:
     print('a is smaller than 3')
 ```
 
-如果 if 的條件判斷式不成立，那麼就會看下一個 elif 的條件判斷式是否成立。elif 可以寫無限多個，只要它放在 if 後面就好。至於 else 則可寫可不寫，但一定會位於整個邏輯判斷的尾端，代表 if 與所有 elif 之條件全都不成立時的狀況。
+如果 if 的條件運算式不成立，那麼就會看下一個 elif 的條件運算式是否成立。elif 可以寫無限多個，只要它放在 if 後面就好。至於 else 則可寫可不寫，但一定會位於整個邏輯判斷的尾端，代表 if 與所有 elif 之條件全都不成立時的狀況。
 
 if...elif...else 是由上往下依序判斷，所以務必注意前面的判斷對後面的影響。以上面的 ```elif a > 2:``` 為例，既然前面已經判斷過 a 是否大於 4 ，不成立就表示 a 一定小於或等於 4。也就是說，第二個判斷式其實就等於 ```elif 2 < a <= 4:```。
 
@@ -756,6 +756,8 @@ while True:
 ```
 
 上面的程式會在 REPL 介面輸出 A 鈕 is_pressed() 的傳回值，有按下時就變成 True。留意這裡也加了 100 毫秒的延遲時間，否則輸出的訊息太過密集，REPL 介面會難以應付。
+
+> 小提示：試著親自練習輸入程式，而不是複製貼上。就算你記不住所有語法，這樣也能讓你習慣寫程式的過程，並找出你比較容易犯的錯誤。
 
 接著，我們希望 micro:bit 在使用者按住 A 時短暫顯示一個圖案：
 
@@ -804,5 +806,83 @@ while True:
 注意 A+B 的按下放在最前面判斷，因為就算沒有按 A+B，你也有可能單獨按了其中一種。要是先判斷按下 A 或 B，誤判的機會就很大了，畢竟你不可能那麼剛好在同一時間按下 A+B。
 
 ## 再探 while：有條件停止迴圈
+
+### 在某個條件不再成立時停止迴圈
+
+if 並不是唯一會用到條件運算式的敘述，其實 while 迴圈也會。在前面的幾個範例中，```while True``` 的 True 就是它的執行條件；while 每次重複迴圈之前，會檢查條件是否成立，成立時才執行迴圈下的區塊。若條件傳回 False，while 就會停止。
+
+下面來看個例子，我們想讓等使用者按 10 下 A 鈕，然後重複顯示一個結束訊息：
+
+```python
+from microbit import display, button_a, sleep
+
+count = 0
+
+while count < 10:
+    display.show(count)
+    if button_a.is_pressed():
+        count = count + 1
+        sleep(250)
+
+display.scroll('Done!')
+```
+
+這個 while 迴圈的條件是 count < 10，而 count 變數一開始是 0。迴圈裡也會把 count 顯示在 LED 顯示幕上。如果使用者按下 A 鈕，count 的值會遞增 1。所以當 count 的值變成 10，while 迴圈就會停了，並執行它後面的 display.scroll()。
+
+> 這裡的 250 毫秒延遲是用來防止使用者按鈕之後，手還沒有離開按鈕，就被迴圈重複偵測到按鈕行為，導致 count 一瞬間就加到 10 了。
+
+就意義上來說，我們是要讓 while 迴圈「在 count >= 10 時停止」。但既然 while 必須在其條件運算式為 True 時才會繼續執行，所以你得讓 while 判斷「停止條件的相反」。不然寫錯的話，迴圈還沒開始就馬上結束了。
+
+> 另外， ```count = count + 1``` 也可以簡寫成 ```count += 1```。這個縮寫法適用於所有的算術算符。
+
+### 暫停程式，等到條件成立時才繼續
+
+while 迴圈的另一個用處是可以拿來等待某件事發生：
+
+```python
+from microbit import display, button_a, sleep
+
+count = 0
+
+while count < 10:
+    display.show(count)
+    while not button_a.is_pressed():
+        pass
+    
+    count += 1
+    sleep(250)
+
+display.scroll('Done!')
+```
+
+在 while 迴圈內的第二個 while，會判斷「使用者是否沒有按 A 鈕」。它底下的 pass 代表不做任何事，寫這個只是因為程式區塊內一定要寫點東西。
+
+也就是說：程式在這裡會進入第二個迴圈，並一直卡在那裡，直到使用者按了 A 鈕為止。這麼做會讓外側的 while 迴圈停止不動，但反過來說，你可以強迫程式在某個時候只等待的事發生，而不是得一直檢查迴圈裡有哪些程式是應該要執行的。
+
+### 用 break 跳出迴圈
+
+另一個結束 while 迴圈的方式是使用 break 敘述。在下面的程式，使用者想按幾下 A 鈕都行，程式不會檢查什麼時候該停止。但若使用者按下 B 鈕，迴圈就會結束：
+
+```python
+from microbit import display, button_a, button_b, sleep
+
+count = 0
+
+while True:
+    display.show(count)
+    
+    if button_a.is_pressed():
+        count += 1
+        sleep(250)
+    
+    if button_b.is_pressed():
+        break
+
+display.scroll('Done!')
+```
+
+什麼時候該用 break 見仁見智，不過通常是用 while 本身的條件不太方便的時候，比如迴圈只有極少數情況需要中止，或者你不想讓迴圈繼續執行一些程式、回到開頭才判斷是否繼續。
+
+此外，break 只會跳出它所在的 while 迴圈。如果這迴圈外面還有一層迴圈，那麼外層迴圈是不會中斷的。
 
 (持續寫作中...)
