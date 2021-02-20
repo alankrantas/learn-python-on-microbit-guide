@@ -12,9 +12,9 @@
 
 這份指南不是替兒童而寫，而是有興趣使用 BBC micro:bit 開發板為媒介來學習 Python 語言的成人或青少年。
 
-現有的書籍或網路教材，在談及 micro:bit 的 Python 教學時，多半著重在 micro:bit 的功能和相關的範例，卻鮮少深入 Python 的語言特色。這份指南的目的是借用 micro:bit 的硬體特色來介紹 Python 的重要概念，好讓學習者將來能將之應用在正式的 Python 程式開發。
+現有的書籍或網路教材，在談及 micro:bit 的 Python 教學時，多半著重在 micro:bit 的功能和相關的範例，卻鮮少深入 Python 的語言特色。這份指南的目的是借用 micro:bit 的硬體特色來介紹 Python 的重要概念，好讓學習者將來能將之應用在正式的 Python 程式開發。此外，目前學 Python 的目的已經一面倒向資料分析（與其延伸的機器學習、人工智慧）領域，但這些第三方套件對 Python 語言技巧要求並不高。反過來看，在 micro:bit 這類嵌入式系統使用 Python，不僅能訓練更靈活的程式開發思維，也能實際與真實世界互動、用於解決生活問題，這是在電腦上學習正規 Python 語言一直很難做到的。
 
-至於 micro:bit 是什麼、為什麼現在要學 Python，這些在網路上已經有非常多討論，這裡就不再贅述。
+至於 micro:bit 是什麼，這些在網路上已經有非常多討論，這裡就不再贅述。
 
 ## 閱讀本指南所需的準備
 
@@ -886,5 +886,70 @@ display.scroll('Done!')
 什麼時候該用 break 見仁見智，不過通常是用 while 本身的條件不太方便的時候，比如迴圈只有極少數情況需要中止，或者你不想讓迴圈繼續執行一些程式、回到開頭才判斷是否繼續。
 
 此外，break 只會跳出它所在的 while 迴圈。如果這迴圈外面還有一層迴圈，那麼外層迴圈是不會中斷的。
+
+## 接收使用者輸入的資料
+
+### 用 input() 接收文字
+
+micro:bit 本身有多種感測器，可以傳回不同的資料或狀態等等，不過這些會留到後面再講。現在，我們要來看怎麼從使用者接收更複雜的資料，辦法是用 input() 函式：
+
+```python
+from microbit import display
+
+data = input('Enter your data: ')
+display.scroll(data)
+```
+
+上傳程式後切到 REPL 模式, 你會看到程式顯示 ```Enter your data:``` 這句提示並停下來，直到你輸入一些東西和按 Enter。接著，你剛才輸入的文字會顯示在 micro:bit 的 LED 幕上。
+
+### 字串與數值：資料型別的轉換
+
+input() 函式傳回的資料一定是字串。那麼，如果我們想輸入數字，比如連續輸入兩個數字和顯示相加結果呢？但前面也看到了，如果把字串「相加」，它們只會連在一起而已。
+
+這時有些 Python 函式就派得上用場，它們可以把其他類型的資料轉換成特定類型的資料：
+
+Python 函式 | 功能
+--- | ---
+int() | 把資料轉換成整數
+float() | 把資料轉換成浮點數
+str() | 把資料轉換成字串
+
+以 ```int()``` 來說，如果字串本身完全是由整數組成，你就可以用它將字串變成整數：
+
+```python
+from microbit import display
+
+num1 = input('Enter number 1: ')
+num2 = input('Enter number 2: ')
+result = int(num1) + int(num2)  # 把字串轉成整數後相加
+
+print('Result:', result)
+display.scroll(result)
+```
+
+執行結果如下（同時結果也會顯示在 LED 幕上）：
+
+```
+Enter number 1: 42
+Enter number 2: 101
+Result: 143
+```
+
+> print() 函式可以連續輸出多個值，各個值用逗號分開。它們在輸出時，彼此之間會空一格。
+
+### 攔截錯誤情況
+
+
+
+### 用 type() 和 instance() 檢查型別
+
+
+
+### 更多型別轉換
+
+
+
+
+
 
 (待續...)
