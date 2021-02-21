@@ -78,25 +78,101 @@ while True:
 這幾行文字
 
 ```
-MicroPython v1.13 on 2020-12-21; micro:bit v2.0.0-beta.3 with nRF52833
+MicroPython v1.13 on 2021-02-19; micro:bit v2.0.0-beta.4 with nRF52833
 Type "help()" for more information.
 >>> 
 ```
 
-就是 REPL 的提示，類似 Windows 命令提示字元或 Unix 的終端機。它告訴我們 Python 直譯器的版本，並等待我們輸入指令。
+就是 REPL 的提示，類似 Windows 命令提示字元或 Unix 的終端機。它告訴我們 Python 直譯器的版本（隨著未來編輯器的更新，你可能會看到更新的版本），並等待我們輸入指令。
+
+如果你使用的是 micro:bit 一代，你會看到它用的是不同的版本：
+
+```
+MicroPython v1.9.2-34-gd64154c73 on 2017-09-01; micro:bit v1.0.1 with nRF51822
+Type "help()" for more information.
+>>> 
+```
 
 現在於 >>> 後面輸入 ```1 + 2```，並按 Enter：
 
 ```
-MicroPython v1.13 on 2020-12-21; micro:bit v2.0.0-beta.3 with nRF52833
-Type "help()" for more information.
 >>> 1 + 2
 3
 ```
 
 可以發現 Python 直譯器解讀了你輸入的程式，並自動算出答案。
 
+### REPL 彩蛋：this、antigravity 與 love
+
+> 如果使用 micro:bit 二代，這兩個功能只有 v2.0.0-beta.4 之後的版本才有。但一代也支援這些功能。
+
+你也可以試試看在 REPL 輸入以下指令：
+
+```
+>>> import this
+
+The Zen of MicroPython, by Nicholas H. Tollervey
+
+Code,
+Hack it,
+Less is more,
+Keep it simple,
+Small is beautiful,
+
+Be brave! Break things! Learn and have fun!
+Express yourself with MicroPython.
+
+Happy hacking! :-)
+```
+
+翻譯如下：
+
+```
+MicroPython 之禪，作者：Nicholas H. Tollervey
+
+寫程式，
+搞變化，
+越簡潔越好，
+越單純越佳。
+
+大膽一點，把程式搞壞也無所謂！享受學習樂趣！
+盡情用 MicroPython 表達自我。
+
+好好當個小駭客吧 :)
+```
+
+這個彩蛋「MicroPython 之禪」源自正規 Python 版本的「[Python 之禪](https://zh.wikipedia.org/zh-tw/Python%E4%B9%8B%E7%A6%85)」（The Zen of Python）。這兩個文件的意旨都是：在學習寫 Python 程式時，雖然沒有規定你能怎麼寫，但程式碼能寫得越精簡越乾淨越好，並用最簡單漂亮的方式解決問題。有些人會說這種寫程式的方式叫做「符合 Python 風格」（Pythonic）。
+
+再來是第二個彩蛋：
+
+```
+>>> import antigravity
++-xkcd.com/353---------------------------------------------------+
+|                                                                |
+|                                                    \0/         |
+|                                                  /   \         |
+|        You're flying!                  MicroPython!  /|        |
+|            How?                                      \ \       |
+|            /                                                   |
+|          0                                                     |
+|         /|\                                                    |
+|          |                                                     |
+|-----____/_\______________________________----------------------|
+|                                                                |
++----------------------------------------------------------------+
+```
+
+這同樣是源自正規 Python 的[同名彩蛋](https://xkcd.com/353/)，你若在正規 Python 的 REPL 介面輸入這指令，就會看到實際的那幅漫畫。這漫畫的意思是，Python（以及 MicroPython）是如此無所不能，甚至還能讓人飛起來（比喻性的）。
+
+最後是 micro:bit 的 MicroPython 獨有的彩蛋。輸入下面這行字，然後看你的 micro:bit，有沒有發現到什麼現象？
+
+```
+>>> import love
+```
+
 ## Python 基礎：運算式
+
+彩蛋很好玩，數字很無聊，但為了學習 Python，我們仍得從數字跟它們的運算開始講起。
 
 在 Python 中，程式碼可分為兩類：**陳述（statement）**與**運算式（expression）**。這兩者都會執行某個功能，但運算式本身也代表某個值，比如前面的 ```1 + 2``` 會得到 ```3```。
 
@@ -940,6 +1016,18 @@ Result: 143
 ### 攔截錯誤情況
 
 現在問題來了：如果使用者在程式要求你輸入數字時，故意輸入非數字，會發生什麼事呢？
+
+```
+Enter number 1: 1
+Enter number 2: a
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+ValueError: invalid syntax for integer with base 10
+```
+
+這裡發生了個錯誤叫 ValueError（值錯誤），發生在程式的第五行，內容是你不能（對 int()）使用非十進位數字（比如這裡我們輸入的字母 a）。
+
+設計程式的一個鐵則是，如果你告訴使用者不能做什麼事，使用者當中一定有人會去做。也就是說，你應該思考在程式裡有可能會發生的任何狀況，並阻止或解決那些問題。
 
 
 
