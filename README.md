@@ -1046,8 +1046,52 @@ ValueError: invalid syntax for integer with base 10
 
 可以發現浮點數的小數點被截掉了。乍看之下這似乎也是一種錯誤，但有時我們反而可以特意用這個方法去掉小數位，比如四捨五入（之後會提）有可能會讓整數超過我們所需的範圍的時候。
 
-## 蜂鳴器與整數頻率
+## 多重資料的處理：蜂鳴器與整數頻率
 
+現在來看以下程式：
+
+```python
+import music, time
+
+music.pitch(440)  # 播放頻率 440 Hz (中音 A)
+time.sleep_ms(500)
+music.stop()  # 停止播放
+```
+
+這會使 micro:bit 用板子背面的蜂鳴器播放中音 A，持續 500 毫秒，然後停止。（如果你使用 micro:bit 第一代，你可以買一個無源蜂鳴器，並用鱷魚夾接到 micro:bit 底下的金手指──正極接 P0，負極接 GND。）
+
+這裡我們用了兩個模組，```music``` 和 ```time```。前者顧名思義是用來放音樂的。後者則擁有一些跟計時相關的功能。其實，microbit 模組下的 sleep 功能引用的就是 ```time.sleep_ms()``` 函式，而電腦版的 Python 環境也有 time 模組。之後有機會再來深入討論它。
+
+如果我們希望連續播放好幾個音，可能得這樣寫：
+
+```python
+import music, time
+
+music.pitch(1175)  # 高音 D
+time.sleep_ms(500)
+
+music.pitch(1319)  # 高音 E
+time.sleep_ms(500)
+
+music.pitch(1047)  # 高音 C
+time.sleep_ms(500)
+
+music.pitch(523)  # 中音 C
+time.sleep_ms(500)
+
+music.pitch(784)  # 中音 G
+time.sleep_ms(1500)
+
+music.stop()
+```
+
+> 你可以在[維基百科](https://zh.wikipedia.org/wiki/%E9%8B%BC%E7%90%B4%E9%8D%B5%E9%A0%BB%E7%8E%87)找到鋼琴 88 個鍵的音和對應的頻率。不過得注意，music.pitch() 只能接收整數，所以像是中音 C（261.626 Hz）得四捨五入為 262 Hz。
+
+看起來播放每一個音的動作都是一樣的，只有頻率跟停頓的時間不同而已。有沒有辦法簡化程式的流程呢？
+
+## Python 基礎：串列（list）集合
+
+集合（collection）是用來記錄多重資料值的容器，它使我們能用更有效率的方式組織和操縱資料。在 Python 的集合當中，最基礎的集合之一叫做**串列（list）**
 
 
 
