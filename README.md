@@ -967,12 +967,49 @@ display.scroll('Done!')
 
 ### 搖骰子
 
+```python
+from microbit import display, accelerometer, sleep
+import random
 
-### 搖骰子 II
+while True:
+    if accelerometer.current_gesture() == 'shake':
+        display.show(random.randint(1, 6))
+        sleep(500)
+```
 
+這裡我們使用了 microbit 模組下的 accelerometer 子功能，它掌管板子背面的加速計的相關功能。```current_gesture()``` 會傳回一些字串，代表板子現在的角度或移動方式是否符合某個事先定義好的動作。在此例我們要判別的是 'shake'（晃動）。後面有機會的話會再講到其他的動作。
 
-### 指南針
+如果使用者搖晃 micro:bit，它會用 random 模組隨機產生一個介於 1 到 6 的數字，並顯示在 LED 顯示幕上。random 模組的 ```randint(a, b)``` 會傳回 a 到 b 之間的一個整數。
 
+> 要注意的是，電腦亂數其實是用演算法產生的，還是有某種模式可循，所以稱為偽隨機數（pseudorandom number）。
+
+最後，為了避免 while 迴圈太快就再次判讀 micro:bit 的當前動作，我們加入 500 毫秒的延遲。
+
+### 哪邊朝上？
+
+```python
+from microbit import display, Image, accelerometer
+import random
+
+while True:
+    gesture = accelerometer.current_gesture()
+    if gesture == 'face up':
+        display.show(Image.YES)
+    elif gesture == 'face down':
+        display.show(Image.NO)
+    elif gesture == 'up':
+        display.show(Image.ARROW_N)
+    elif gesture == 'down':
+        display.show(Image.ARROW_S)
+    elif gesture == 'left':
+        display.show(Image.ARROW_E)
+    elif gesture == 'right':
+        display.show(Image.ARROW_W)
+```
+
+這回我們使用了 if 和多重 elif 來判斷 micro:bit 的多種動作。動作 'up' 的意思是 micro:bit 的上緣高於下緣，相對的 'face up' 是指 LED 幕水平面向上方。所以如果 micro:bit 歪向某一邊，它會顯示對應的箭頭指向「上方」，而真正朝上時會顯示打勾。
+
+這次我們不需要加入時間延遲，因為板子轉動到某個位置後，短時間內是不太會有什麼改變的。事實上你反而可能會希望程式能及時判讀 micro:bit 的當前動作。
 
 ## 接收使用者輸入的資料
 
