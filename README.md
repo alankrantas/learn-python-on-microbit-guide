@@ -110,7 +110,11 @@ Type "help()" for more information.
 
 ```
 >>> import this
+```
 
+你會看到
+
+```
 The Zen of MicroPython, by Nicholas H. Tollervey
 
 Code,
@@ -125,7 +129,7 @@ Express yourself with MicroPython.
 Happy hacking! :-)
 ```
 
-翻譯如下：
+這段文字的翻譯如下：
 
 ```
 MicroPython 之禪，作者：Nicholas H. Tollervey
@@ -141,12 +145,17 @@ MicroPython 之禪，作者：Nicholas H. Tollervey
 好好當個小駭客吧 :)
 ```
 
-這個彩蛋「MicroPython 之禪」源自正規 Python 版本的「[Python 之禪](https://zh.wikipedia.org/zh-tw/Python%E4%B9%8B%E7%A6%85)」（The Zen of Python）。這兩個文件的意旨都是：在學習寫 Python 程式時，雖然沒有規定你能怎麼寫，但程式碼能寫得越精簡越乾淨越好，並用最簡單漂亮的方式解決問題。有些人會說這種寫程式的方式叫做「符合 Python 風格」（Pythonic）。
+這個彩蛋「MicroPython 之禪」源自正規 Python 版本的「[Python 之禪](https://zh.wikipedia.org/zh-tw/Python%E4%B9%8B%E7%A6%85)」（The Zen of Python）。這兩個文件的核心意旨都是：在學習寫 Python 程式時，雖然沒有規定你能怎麼寫，但程式碼能寫得越精簡越乾淨越好，並用最簡單漂亮的方式解決問題。有些人會說這種寫程式的方式叫做「符合 Python 風格」（Pythonic）。
 
 再來是第二個彩蛋：
 
 ```
 >>> import antigravity
+```
+
+會出現
+
+```
 +-xkcd.com/353---------------------------------------------------+
 |                                                                |
 |                                                    \0/         |
@@ -1156,9 +1165,15 @@ music.stop()
 
 看起來播放每一個音的動作都是一樣的，只有頻率跟停頓的時間不同而已。有沒有辦法簡化程式的流程呢？
 
-## Python 基礎：串列（list）集合
+## Python 基礎：串列（list）和元祖（tuple）集合
 
-集合（collection）是用來記錄多重資料值的容器，它使我們能用更有效率的方式組織和操縱資料。在 Python 的集合當中，最基礎的集合之一叫做**串列（list）**
+集合（collection）是用來記錄多重資料值的容器，它使我們能用更有效率的方式組織和操縱資料。在 Python 的集合當中，最基礎的集合之一叫做**串列（list）**：
+
+```
+>>> lst = [1, 2, 3, 4, 5]
+>>> lst
+[1, 2, 3, 4, 5]
+```
 
 
 
