@@ -1134,25 +1134,25 @@ music.stop()  # 停止播放
 ```python
 import music, time
 
-music.pitch(1175)  # 高音 D
+music.pitch(587)  # 高音 D
 time.sleep_ms(500)
 
-music.pitch(1319)  # 高音 E
+music.pitch(659)  # 高音 E
 time.sleep_ms(500)
 
-music.pitch(1047)  # 高音 C
+music.pitch(523)  # 高音 C
 time.sleep_ms(500)
 
-music.pitch(523)  # 中音 C
+music.pitch(262)  # 中音 C
 time.sleep_ms(500)
 
-music.pitch(784)  # 中音 G
+music.pitch(392)  # 中音 G
 time.sleep_ms(1500)
 
 music.stop()
 ```
 
-> 你可以在[維基百科](https://zh.wikipedia.org/wiki/%E9%8B%BC%E7%90%B4%E9%8D%B5%E9%A0%BB%E7%8E%87)找到鋼琴 88 個鍵的音和對應的頻率。不過得注意，music.pitch() 只能接收整數，所以像是中音 C（261.626 Hz）得四捨五入為 262 Hz。
+> 你可以在[維基百科](https://zh.wikipedia.org/wiki/%E9%8B%BC%E7%90%B4%E9%8D%B5%E9%A0%BB%E7%8E%87)找到鋼琴 88 個鍵的音和對應的頻率。不過得注意，music.pitch() 只能接收整數，所以像是中音 C（261.626 Hz）得四捨五入為 262。
 
 看起來播放每一個音的動作都是一樣的，只有頻率跟停頓的時間不同而已。有沒有辦法簡化程式的流程呢？
 
