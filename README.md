@@ -1011,6 +1011,23 @@ while True:
 
 這次我們不需要加入時間延遲，因為板子轉動到某個位置後，短時間內是不太會有什麼改變的。事實上你反而可能會希望程式能及時判讀 micro:bit 的當前動作。
 
+### 音量警告計
+
+這個範例只適用於 micro:bit 二代，因為會用到麥克風和蜂鳴器。麥克風啟用時，正面的麥克風小圖案會點亮。
+
+```python
+from microbit import display, Image, microphone, sleep
+import music
+
+while True:
+    if microphone.sound_level() >= 16:
+        music.pitch(440)
+        sleep(100)
+        music.stop()
+```
+
+```microphone.sound_level()``` 會傳回麥克風的相對音量（整數 0~255）。這裡我們設了個門檻，音量大於門檻時會用蜂鳴器播放一個聲音，持續半秒鐘。後面我們會再講到 ```music.pitch()``` 的使用。
+
 ## 接收使用者輸入的資料
 
 ### 用 input() 接收文字
