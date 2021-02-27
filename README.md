@@ -1039,9 +1039,7 @@ while True:
 
 ```music.pitch()``` 會播放一個特定頻率的聲音，```music.stop()``` 則是停止聲音。後面我們會再看到更詳細的使用方式。
 
-## 接收使用者輸入的資料
-
-### 用 input() 接收文字
+##  用 input() 接收使用者輸入的資料
 
 micro:bit 本身有多種感測器，可以傳回不同的資料或狀態等等，不過這些會留到後面再講。現在，我們要來看怎麼從使用者接收更複雜的資料，辦法是用 input() 函式：
 
@@ -1054,7 +1052,7 @@ display.scroll(data)
 
 上傳程式後切到 REPL 模式, 你會看到程式顯示 ```Enter your data:``` 這句提示並停下來，直到你輸入一些東西和按 Enter。接著，你剛才輸入的文字會顯示在 micro:bit 的 LED 幕上。
 
-### 字串與數值：資料型別的轉換
+## 字串與數值：資料型別的轉換
 
 input() 函式傳回的資料一定是字串。那麼，如果我們想輸入數字，比如連續輸入兩個數字和顯示相加結果呢？但前面也看到了，如果把字串「相加」，它們只會連在一起而已。
 
@@ -1120,50 +1118,170 @@ ValueError: invalid syntax for integer with base 10
 3
 ```
 
-可以發現浮點數的小數點被截掉了。乍看之下這似乎也是一種錯誤，但有時我們反而可以特意用這個方法去掉小數位，比如四捨五入（之後會提）有可能會讓整數超過我們所需的範圍的時候。
+可以發現浮點數的小數點被截掉了。乍看之下這似乎也是一種錯誤，但有時我們反而可以特意用這個方法去掉小數位，比如若做四捨五入（之後會提）有可能會讓整數超過我們所需的範圍的時候。
 
-## 多重資料的處理：蜂鳴器與整數頻率
+## 蜂鳴器與整數頻率
 
-現在來看以下程式：
+我們來看一些例子，示範為什麼你需要留意資料型別的轉換。
+
+先來看以下程式：
 
 ```python
+from microbit import sleep
 import music, time
 
 music.pitch(440)  # 播放頻率 440 Hz (中音 A)
-time.sleep_ms(500)
+sleep(500)
 music.stop()  # 停止播放
 ```
 
-這會使 micro:bit 用板子背面的蜂鳴器播放中音 A，持續 500 毫秒，然後停止。（如果你使用 micro:bit 第一代，你可以買一個無源蜂鳴器，並用鱷魚夾接到 micro:bit 底下的金手指──正極接 P0，負極接 GND。）
-
-這裡我們用了兩個模組，```music``` 和 ```time```。前者顧名思義是用來放音樂的。後者則擁有一些跟計時相關的功能。其實，microbit 模組下的 sleep 功能引用的就是 ```time.sleep_ms()``` 函式，而電腦版的 Python 環境也有 time 模組。之後有機會再來深入討論它。
-
-如果我們希望連續播放好幾個音，可能得這樣寫：
-
-```python
-import music, time
-
-music.pitch(587)  # 高音 D
-time.sleep_ms(500)
-
-music.pitch(659)  # 高音 E
-time.sleep_ms(500)
-
-music.pitch(523)  # 高音 C
-time.sleep_ms(500)
-
-music.pitch(262)  # 中音 C
-time.sleep_ms(500)
-
-music.pitch(392)  # 中音 G
-time.sleep_ms(1500)
-
-music.stop()
-```
+這裡我們用了 ```music``` 模組，顧名思義是用來放音樂的。這會使 micro:bit 用板子背面的蜂鳴器播放中音 A，持續 500 毫秒，然後停止。（如果你使用 micro:bit 第一代，你可以買一個無源蜂鳴器，並用鱷魚夾接到 micro:bit 底下的金手指──正極接 P0，負極接 GND。）
 
 > 你可以在[維基百科](https://zh.wikipedia.org/wiki/%E9%8B%BC%E7%90%B4%E9%8D%B5%E9%A0%BB%E7%8E%87)找到鋼琴 88 個鍵的音和對應的頻率。不過得注意，music.pitch() 只能接收整數，所以像是中音 C（261.626 Hz）得四捨五入為 262。
 
-看起來播放每一個音的動作都是一樣的，只有頻率跟停頓的時間不同而已。有沒有辦法簡化程式的流程呢？
+現在我們希望讓使用者自己來輸入頻率，然後讓蜂鳴器放出來：
+
+```python
+from microbit import sleep
+import music, time
+
+while True:
+    note = int(input('Enter frequency: '))
+    music.pitch(note)
+    sleep(500)
+    music.stop()
+```
+
+既然 input() 傳回的是字串，得先用 int() 轉成整數才行。當然，這樣是在假設使用者不會（故意或不慎）輸入無法轉換的資料。你可以試試看輸入一些整數頻率。
+
+或者我們可以先輸入浮點數，然後讓 Python 把它轉成整數：
+
+```python
+from microbit import sleep
+import music, time
+
+while True:
+    note = float(input('Enter frequency: '))
+    music.pitch(int(note))
+    sleep(500)
+    music.stop()
+```
+
+現在問題來了，你要怎麼避免使用者輸入錯誤的資料（比如一般的文字）而害程式當掉呢？
+
+### try...except 錯誤攔截
+
+如果我們知道某段程式碼有可能在執行時出錯，我們可以把它放在 **try** 敘述的區塊內：
+
+```python
+from microbit import sleep
+import music, time
+
+while True:
+    try:
+        note = float(input('Enter frequency: '))
+        music.pitch(int(note))
+        sleep(500)
+        music.stop()
+    except:
+        print('Error: invalid frequency')
+```
+
+如果 try 區塊內的程式碼產生錯誤，它就會被「攔截」下來。而這也是為何 try 後面需要寫第二個區塊，代表出錯後你要怎麼處置。
+
+**except** 敘述代表「出錯後要執行的區塊」，通常是用來警告使用者發生了什麼事。如果你不打算做任何事，except 還是得寫，我們可以在裡面只寫一行 ```pass``` 代表不做事情：
+
+```python
+from microbit import sleep
+import music, time
+
+while True:
+    try:
+        note = float(input('Enter frequency: '))
+        music.pitch(int(note))
+        sleep(500)
+        music.stop()
+    except:
+        pass
+```
+
+try 可以搭配的另一個敘述是 **finally**。不管 try 區塊有沒有發生錯誤，而 finally 敘述有寫的話，最後一定會執行 finally：
+
+```python
+from microbit import sleep
+import music, time
+
+while True:
+    try:
+        note = float(input('Enter frequency: '))
+        music.pitch(int(note))
+        sleep(500)
+    except:
+        print('Error: invalid frequency')
+    finally:
+        music.stop()  # 不管有沒有錯誤，都確保蜂鳴器關閉
+```
+
+只寫 try...finally 也是可以的，雖然大部分時候我們只會用到 try...except。
+
+### 用 round() 四捨五入
+
+下面來看一個稍微變化的版本。在鋼琴上有 88 個鍵，其中中音 A（440 Hz）是第 49 個音。很有趣的是，有一條公式可以用音符的位置編號換算出它們的對應頻率：
+
+```
+頻率 = 440 * 2 ** ((音符編號 - 49) / 12)
+```
+
+這時換算出來的頻率，就要用四捨五入轉成整數了，這樣才能盡可能接近原始的頻率（即使人耳可能聽不出差異），而不是用 int() 直接丟掉小數點：
+
+```python
+from microbit import sleep
+import music, time
+
+while True:
+    try:
+        n = int(input('Enter note number: '))
+        freq = 440 * 2 ** ((n - 49) / 12)  # 換算頻率
+        print('Playing frequency:', freq)
+        
+        music.pitch(round(freq))
+        sleep(500)
+        music.stop()
+    except Exception as e:
+        print('Error :', type(e), e)
+```
+
+頻率換算出來是浮點數, 但程式也會印出四捨五入成整數後的結果，讓我們確認轉換效果：
+
+```
+Enter note number: 40
+Playing frequency: 261.6256 -> 262
+Enter note number: 41
+Playing frequency: 277.1827 -> 277
+Enter note number: 42
+Playing frequency: 293.6648 -> 294
+Enter note number: 43
+Playing frequency: 311.127 -> 311
+Enter note number: 44
+Playing frequency: 329.6276 -> 330
+Enter note number: 45
+Playing frequency: 349.2282 -> 349
+```
+
+其實 round() 不只是能四捨五入到整數而已。它可以接收第二個參數，代表到捨入到小數哪一位（不寫就是 0，因此等於整數）：
+
+```
+>>> round(3.141592654)
+3
+>>> round(3.141592654, 2)
+3.14
+>>> round(3.141592654, 4)
+3.1416
+```
+
+## LED 幕的各別燈光控制
+
+
 
 ## Python 基礎：串列（list）和元祖（tuple）集合
 
