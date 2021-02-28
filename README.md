@@ -18,6 +18,8 @@
 
 使用 micro:bit 的另一個可能好處，是你可以不用安裝任何東西，只需倚賴官方的線上編輯器和 micro:bit 自身的 Python 編譯器即可。相較於得安裝龐大的官方 Python 執行環境或笨重的 Anaconda（許多人非常偏好使用它的 Spyder 或 Jupyter 編輯器），使用 micro:bit 也許反而顯得輕鬆許多，而且在任何地方都能學習。
 
+![microbit-overview-2](https://user-images.githubusercontent.com/44191076/109407839-2025e180-79bf-11eb-9970-883467992201.png)
+
 ## 目錄
 
 * Part 01：[事前準備與 REPL](https://github.com/alankrantas/learn-python-on-microbit-guide/blob/main/part_01.md)
