@@ -91,7 +91,7 @@ ValueError: invalid syntax for integer with base 10
 
 ```python
 from microbit import sleep
-import music, time
+import music
 
 music.pitch(440)  # 播放頻率 440 Hz (中音 A)
 sleep(500)
@@ -106,7 +106,7 @@ music.stop()  # 停止播放
 
 ```python
 from microbit import sleep
-import music, time
+import music
 
 while True:
     note = int(input('Enter frequency: '))
@@ -121,7 +121,7 @@ while True:
 
 ```python
 from microbit import sleep
-import music, time
+import music
 
 while True:
     note = float(input('Enter frequency: '))
@@ -138,7 +138,7 @@ while True:
 
 ```python
 from microbit import sleep
-import music, time
+import music
 
 while True:
     try:
@@ -156,7 +156,7 @@ while True:
 
 ```python
 from microbit import sleep
-import music, time
+import music
 
 while True:
     try:
@@ -172,7 +172,7 @@ try 可以搭配的另一個敘述是 **finally**。不管 try 區塊有沒有�
 
 ```python
 from microbit import sleep
-import music, time
+import music
 
 while True:
     try:
@@ -199,7 +199,7 @@ while True:
 
 ```python
 from microbit import sleep
-import music, time
+import music
 
 while True:
     try:
