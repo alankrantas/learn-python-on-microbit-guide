@@ -214,3 +214,30 @@ from microbit import *
 ```
 
 這樣在 micro:bit 上幾乎不太可能遇到問題，但在正規的 Python 程式設計中，反而不見得是好主意，因為你有可能無意間加入了太多功能的名稱（Python 並不是真的把模組讀進記憶體，畢竟它們已經存在了；實際上更像是建立一個路標指向它），而有兩個模組的子功能剛好撞名，因此有一邊會蓋掉另一邊。所以在本教材中，我們還是會很明確的寫出我們要匯入什麼。
+
+### 結合模組的不同功能：顯示圖案
+
+現在我們來結合 microbit 模組下的多個功能，好在 LED 顯示幕上秀一些事先定義好的圖案。
+
+回到 REPL 模式，來調查 microbit.Image 下的內容：
+
+```
+>>> import microbit
+>>> dir(microbit.Image)
+['__class__', '__name__', 'copy', '__bases__', '__dict__', 'ALL_ARROWS', 'ALL_CLOCKS', 'ANGRY', 'ARROW_E', 'ARROW_N', 'ARROW_NE', 'ARROW_NW', 'ARROW_S', 'ARROW_SE', 'ARROW_SW', 'ARROW_W', 'ASLEEP', 'BUTTERFLY', 'CHESSBOARD', 'CLOCK1', 'CLOCK10', 'CLOCK11', 'CLOCK12', 'CLOCK2', 'CLOCK3', 'CLOCK4', 'CLOCK5', 'CLOCK6', 'CLOCK7', 'CLOCK8', 'CLOCK9', 'CONFUSED', 'COW', 'DIAMOND', 'DIAMOND_SMALL', 'DUCK', 'FABULOUS', 'GHOST', 'GIRAFFE', 'HAPPY', 'HEART', 'HEART_SMALL', 'HOUSE', 'MEH', 'MUSIC_CROTCHET', 'MUSIC_QUAVER', 'MUSIC_QUAVERS', 'NO', 'PACMAN', 'PITCHFORK', 'RABBIT', 'ROLLERSKATE', 'SAD', 'SILLY', 'SKULL', 'SMILE', 'SNAKE', 'SQUARE', 'SQUARE_SMALL', 'STICKFIGURE', 'SURPRISED', 'SWORD', 'TARGET', 'TORTOISE', 'TRIANGLE', 'TRIANGLE_LEFT', 'TSHIRT', 'UMBRELLA', 'XMAS', 'YES', 'blit', 'crop', 'fill', 'get_pixel', 'height', 'invert', 'set_pixel', 'shift_down', 'shift_left', 'shift_right', 'shift_up', 'width']
+>>> 
+```
+
+Image 包含一系列圖形，你可以把這些東西傳給 display.show()。
+
+現在回到程式撰寫畫面：
+
+```python
+from microbit import display, Image
+
+display.show(Image.HAPPY)
+```
+
+這裡從 microbit 模組匯入了 display 和 Image 名稱（兩者用逗號分隔），然後在 LED 顯示幕顯示笑臉。我們之後會再講怎麼「畫出」你自己的圖案。
+
+![04](https://user-images.githubusercontent.com/44191076/107517822-3541f880-6be9-11eb-9022-b64821444012.png)
