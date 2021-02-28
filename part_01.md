@@ -1,4 +1,4 @@
-# Part 01
+# Part 01：事前準備與 REPL
 
 [回到目錄](https://github.com/alankrantas/learn-python-on-microbit-guide/blob/main/README.md)
 
