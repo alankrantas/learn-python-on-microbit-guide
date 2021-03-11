@@ -1,4 +1,4 @@
-# 用 BBC micro:bit 學 Python：免費、免安裝的完全入門指南
+# 用 BBC micro:bit 學 Python：免費、免安裝的完全 Python 入門指南
 
 作：Alan Wang, 2021
 
