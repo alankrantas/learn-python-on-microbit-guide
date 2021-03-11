@@ -1,6 +1,6 @@
 # 用 BBC micro:bit 學 Python：免費、免安裝的完全入門指南
 
-作：Alan Wang, Feb 2021
+作：Alan Wang, 2021
 
 本指南採用 [GNU 3.0 通用公共授權](https://www.chinasona.org/gnu/gnulgpl-v3-tc.html)，注意這意味著衍生作品必須同樣採用 GNU 授權。這份指南不含任何商業推廣內容。
 
