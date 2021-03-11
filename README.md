@@ -27,5 +27,6 @@
 * Part 03：[初探函式、模組與 micro:bit 控制](https://github.com/alankrantas/learn-python-on-microbit-guide/blob/main/part_03.md)
 * Part 04：[迴圈與邏輯判斷](https://github.com/alankrantas/learn-python-on-microbit-guide/blob/main/part_04.md)
 * Part 05：[資料輸入與型別轉換](https://github.com/alankrantas/learn-python-on-microbit-guide/blob/main/part_05.md)
+* Part 06：[資料集合與迴圈迭代](https://github.com/alankrantas/learn-python-on-microbit-guide/blob/main/part_06.md)
 
-(待續...)
+(斷斷續續寫作中...)
